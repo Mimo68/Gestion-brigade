@@ -559,69 +559,38 @@ const EmployeeManagement = () => {
               Modifier les congés - {editingEmployee.name}
             </h2>
             <form onSubmit={handleEditLeaveBalance}>
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Total jours
-                  </label>
-                  <input
-                    type="number"
-                    min="0"
-                    required
-                    value={editLeaveData.total_days}
-                    onChange={(e) => setEditLeaveData({...editLeaveData, total_days: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Total heures
-                  </label>
-                  <input
-                    type="number"
-                    min="0"
-                    value={editLeaveData.total_hours}
-                    onChange={(e) => setEditLeaveData({...editLeaveData, total_hours: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500"
-                  />
-                </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Total heures de congé
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  required
+                  value={editLeaveData.total_hours}
+                  onChange={(e) => setEditLeaveData({...editLeaveData, total_hours: e.target.value})}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500"
+                />
               </div>
               
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Jours utilisés
-                  </label>
-                  <input
-                    type="number"
-                    min="0"
-                    required
-                    value={editLeaveData.used_days}
-                    onChange={(e) => setEditLeaveData({...editLeaveData, used_days: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Heures utilisées
-                  </label>
-                  <input
-                    type="number"
-                    min="0"
-                    value={editLeaveData.used_hours}
-                    onChange={(e) => setEditLeaveData({...editLeaveData, used_hours: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500"
-                  />
-                </div>
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Heures utilisées
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  required
+                  value={editLeaveData.used_hours}
+                  onChange={(e) => setEditLeaveData({...editLeaveData, used_hours: e.target.value})}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500"
+                />
               </div>
               
               <div className="bg-gray-50 rounded-xl p-4 mb-6">
                 <h3 className="font-medium text-gray-700 mb-2">Résumé :</h3>
                 <p className="text-sm text-gray-600">
-                  Jours restants: {(editLeaveData.total_days || 0) - (editLeaveData.used_days || 0)}
-                </p>
-                <p className="text-sm text-gray-600">
-                  Heures restantes: {(editLeaveData.total_hours || 0) - (editLeaveData.used_hours || 0)}
+                  Heures restantes: {(editLeaveData.total_hours || 0) - (editLeaveData.used_hours || 0)} heures
                 </p>
               </div>
               
