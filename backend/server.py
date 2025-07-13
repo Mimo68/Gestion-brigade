@@ -80,6 +80,19 @@ def calculate_initial_leave_days(contract_type: str) -> tuple[int, int]:
     else:
         return (20, 160)
 
+# Helper function to calculate leave hours based on contract type (default values)
+def calculate_initial_leave_hours(contract_type: str) -> int:
+    """Returns default hours based on contract type - can be manually adjusted"""
+    # Ces valeurs par défaut peuvent être modifiées manuellement
+    if contract_type == "CDI":
+        return 200  # 200 heures par défaut
+    elif contract_type == "CDD":
+        return 160  # 160 heures par défaut
+    elif contract_type == "Art.60":
+        return 120  # 120 heures par défaut
+    else:
+        return 160
+
 # Helper function to calculate business days between dates
 def calculate_business_days(start_date: date, end_date: date) -> int:
     from datetime import timedelta
