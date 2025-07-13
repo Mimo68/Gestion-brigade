@@ -340,12 +340,15 @@ async def init_sample_data():
             contract_type=contract
         )
         
-        total_days = calculate_initial_leave_days(contract)
+        total_days, total_hours = calculate_initial_leave_days(contract)
         used_days = i % 10  # Random used days for demo
+        used_hours = (i % 5) * 8  # Random used hours for demo
         
         employee_dict = employee_data.dict()
         employee_dict['total_leave_days'] = total_days
+        employee_dict['total_leave_hours'] = total_hours
         employee_dict['used_leave_days'] = used_days
+        employee_dict['used_leave_hours'] = used_hours
         
         employee = Employee(**employee_dict)
         employees.append(employee.dict())
