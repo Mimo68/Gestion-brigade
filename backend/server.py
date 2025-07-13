@@ -63,6 +63,7 @@ class LeaveRecord(BaseModel):
     start_date: date
     end_date: date
     days_count: int
+    hours_count: int = 0  # Heures de congé
     leave_type: str = "Congé payé"
     status: str = "En cours"
     created_at: datetime = Field(default_factory=datetime.utcnow)
@@ -71,6 +72,7 @@ class LeaveRecordCreate(BaseModel):
     employee_id: str
     start_date: date
     end_date: date
+    hours_count: int = 0  # Optionnel pour les congés en heures
     leave_type: str = "Congé payé"
 
 # Helper function to calculate leave days based on contract type
