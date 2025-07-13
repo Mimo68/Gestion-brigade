@@ -314,12 +314,21 @@ async def init_sample_data():
         used_hours = (i % 5) * 8  # Random used hours for demo
         
         employee_dict = employee_data.model_dump()
-        employee_dict['start_date'] = employee_dict['start_date'].isoformat()  # Convert to string
         employee_dict['total_leave_hours'] = total_hours
         employee_dict['used_leave_hours'] = used_hours
         
+        # Convert date to string for MongoDB
+        if 'start_date' in employee_dict and hasattr(employee_dict['start_date'], 'isoformat'):
+            employee_dict['start_date'] = employee_dict['start_date'].isoformat()
+        
         employee = Employee(**employee_dict)
-        employees.append(employee.model_dump())
+        
+        # Convert to dict with proper date serialization
+        employee_doc = employee.model_dump()
+        if isinstance(employee_doc.get('start_date'), date):
+            employee_doc['start_date'] = employee_doc['start_date'].isoformat()
+        
+        employees.append(employee_doc)
     
     await db.employees.insert_many(employees)
     return {"message": f"{len(employees)} employés ajoutés"}
