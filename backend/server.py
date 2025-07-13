@@ -127,15 +127,59 @@ async def get_employee(employee_id: str):
     return Employee(**employee)
 
 @api_router.put("/employees/{employee_id}", response_model=Employee)
-async def update_employee(employee_id: str, employee_data: EmployeeCreate):
-    total_days = calculate_initial_leave_days(employee_data.contract_type)
+async def update_employee(employee_id: str, employee_data: EmployeeUpdate):
+    update_dict = {}
     
-    employee_dict = employee_data.dict()
-    employee_dict['total_leave_days'] = total_days
+    for field, value in employee_data.dict(exclude_unset=True).items():
+        if value is not None:
+            update_dict[field] = value
+    
+    # If contract type is updated, recalculate leave allocation
+    if 'contract_type' in update_dict:
+        total_days, total_hours = calculate_initial_leave_days(update_dict['contract_type'])
+        update_dict['total_leave_days'] = total_days
+        update_dict['total_leave_hours'] = total_hours
+    
+    if not update_dict:
+        raise HTTPException(status_code=400, detail="Aucune donnée à mettre à jour")
     
     result = await db.employees.update_one(
         {"id": employee_id},
-        {"$set": employee_dict}
+        {"$set": update_dict}
+    )
+    
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Employé non trouvé")
+    
+    updated_employee = await db.employees.find_one({"id": employee_id})
+    return Employee(**updated_employee)
+
+@api_router.put("/employees/{employee_id}/leave-balance")
+async def update_employee_leave_balance(
+    employee_id: str, 
+    total_days: Optional[int] = None,
+    total_hours: Optional[int] = None,
+    used_days: Optional[int] = None,
+    used_hours: Optional[int] = None
+):
+    """Mettre à jour manuellement le solde de congés d'un employé"""
+    update_dict = {}
+    
+    if total_days is not None:
+        update_dict['total_leave_days'] = total_days
+    if total_hours is not None:
+        update_dict['total_leave_hours'] = total_hours
+    if used_days is not None:
+        update_dict['used_leave_days'] = used_days
+    if used_hours is not None:
+        update_dict['used_leave_hours'] = used_hours
+    
+    if not update_dict:
+        raise HTTPException(status_code=400, detail="Aucune donnée à mettre à jour")
+    
+    result = await db.employees.update_one(
+        {"id": employee_id},
+        {"$set": update_dict}
     )
     
     if result.matched_count == 0:
