@@ -76,15 +76,16 @@ class LeaveRecordCreate(BaseModel):
     leave_type: str = "Congé payé"
 
 # Helper function to calculate leave days based on contract type
-def calculate_initial_leave_days(contract_type: str) -> int:
+def calculate_initial_leave_days(contract_type: str) -> tuple[int, int]:
+    """Returns (days, hours) based on contract type"""
     if contract_type == "CDI":
-        return 25
+        return (25, 200)  # 25 jours + 200 heures
     elif contract_type == "CDD":
-        return 20
+        return (20, 160)  # 20 jours + 160 heures
     elif contract_type == "Art.60":
-        return 15
+        return (15, 120)  # 15 jours + 120 heures
     else:
-        return 20
+        return (20, 160)
 
 # Helper function to calculate business days between dates
 def calculate_business_days(start_date: date, end_date: date) -> int:
