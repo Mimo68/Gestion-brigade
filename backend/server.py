@@ -97,13 +97,18 @@ def calculate_business_days(start_date: date, end_date: date) -> int:
 async def create_employee(employee_data: EmployeeCreate):
     total_hours = calculate_initial_leave_hours(employee_data.contract_type)
     
-    employee_dict = employee_data.dict()
+    employee_dict = employee_data.model_dump()
     employee_dict['total_leave_hours'] = total_hours
     employee_dict['used_leave_hours'] = 0
     
     employee = Employee(**employee_dict)
     
-    await db.employees.insert_one(employee.model_dump())
+    # Convert to dict with proper date serialization  
+    employee_doc = employee.model_dump()
+    if isinstance(employee_doc.get('start_date'), date):
+        employee_doc['start_date'] = employee_doc['start_date'].isoformat()
+    
+    await db.employees.insert_one(employee_doc)
     return employee
 
 @api_router.get("/employees", response_model=List[Employee])
