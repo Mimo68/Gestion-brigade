@@ -28,14 +28,12 @@ const EmployeeManagement = () => {
     employee_id: '',
     start_date: '',
     end_date: '',
-    hours_count: 0,
+    hours_count: 8,
     leave_type: 'Congé payé'
   });
 
   const [editLeaveData, setEditLeaveData] = useState({
-    total_days: 0,
     total_hours: 0,
-    used_days: 0,
     used_hours: 0
   });
 
