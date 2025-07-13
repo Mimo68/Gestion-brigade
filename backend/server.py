@@ -211,14 +211,12 @@ async def create_leave_record(leave_data: LeaveRecordCreate):
     
     leave_record = LeaveRecord(**leave_dict)
     
-    # Update employee's used leave days/hours
-    new_used_days = employee['used_leave_days'] + days_count
+    # Update employee's used leave hours
     new_used_hours = employee['used_leave_hours'] + hours_count
     
     await db.employees.update_one(
         {"id": leave_data.employee_id},
         {"$set": {
-            "used_leave_days": new_used_days,
             "used_leave_hours": new_used_hours
         }}
     )
