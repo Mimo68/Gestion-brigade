@@ -188,19 +188,15 @@ async def create_leave_record(leave_data: LeaveRecordCreate):
     if not employee:
         raise HTTPException(status_code=404, detail="Employé non trouvé")
     
-    # Calculate business days
-    days_count = calculate_business_days(leave_data.start_date, leave_data.end_date)
-    hours_count = leave_data.hours_count or 0
+    hours_count = leave_data.hours_count
     
     # Check if employee has enough leave hours
-    if hours_count > 0 and employee['used_leave_hours'] + hours_count > employee['total_leave_hours']:
+    if employee['used_leave_hours'] + hours_count > employee['total_leave_hours']:
         raise HTTPException(status_code=400, detail="Pas assez d'heures de congé disponibles")
     
     # Create leave record
     leave_dict = leave_data.dict()
     leave_dict['employee_name'] = employee['name']
-    leave_dict['days_count'] = days_count
-    leave_dict['hours_count'] = hours_count
     leave_dict['status'] = "En cours"
     
     leave_record = LeaveRecord(**leave_dict)
@@ -210,9 +206,7 @@ async def create_leave_record(leave_data: LeaveRecordCreate):
     
     await db.employees.update_one(
         {"id": leave_data.employee_id},
-        {"$set": {
-            "used_leave_hours": new_used_hours
-        }}
+        {"$set": {"used_leave_hours": new_used_hours}}
     )
     
     # Save leave record
