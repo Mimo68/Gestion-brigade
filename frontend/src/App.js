@@ -21,7 +21,8 @@ const EmployeeManagement = () => {
   const [newEmployee, setNewEmployee] = useState({
     name: '',
     start_date: '',
-    contract_type: 'CDI'
+    contract_type: 'CDI',
+    total_leave_hours: ''
   });
   
   const [newLeave, setNewLeave] = useState({
