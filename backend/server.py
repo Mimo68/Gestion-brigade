@@ -107,12 +107,10 @@ def calculate_business_days(start_date: date, end_date: date) -> int:
 # Employee Routes
 @api_router.post("/employees", response_model=Employee)
 async def create_employee(employee_data: EmployeeCreate):
-    total_days, total_hours = calculate_initial_leave_days(employee_data.contract_type)
+    total_hours = calculate_initial_leave_hours(employee_data.contract_type)
     
     employee_dict = employee_data.dict()
-    employee_dict['total_leave_days'] = total_days
     employee_dict['total_leave_hours'] = total_hours
-    employee_dict['used_leave_days'] = 0
     employee_dict['used_leave_hours'] = 0
     
     employee = Employee(**employee_dict)
