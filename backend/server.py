@@ -198,10 +198,7 @@ async def create_leave_record(leave_data: LeaveRecordCreate):
     days_count = calculate_business_days(leave_data.start_date, leave_data.end_date)
     hours_count = leave_data.hours_count or 0
     
-    # Check if employee has enough leave days/hours
-    if employee['used_leave_days'] + days_count > employee['total_leave_days']:
-        raise HTTPException(status_code=400, detail="Pas assez de jours de congé disponibles")
-    
+    # Check if employee has enough leave hours
     if hours_count > 0 and employee['used_leave_hours'] + hours_count > employee['total_leave_hours']:
         raise HTTPException(status_code=400, detail="Pas assez d'heures de congé disponibles")
     
