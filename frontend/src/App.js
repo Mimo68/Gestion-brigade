@@ -110,13 +110,42 @@ const EmployeeManagement = () => {
     e.preventDefault();
     try {
       await axios.post(`${API}/leaves`, newLeave);
-      setNewLeave({ employee_id: '', start_date: '', end_date: '', leave_type: 'Congé payé' });
+      setNewLeave({ employee_id: '', start_date: '', end_date: '', hours_count: 0, leave_type: 'Congé payé' });
       setShowAddLeave(false);
       await loadData();
     } catch (error) {
       console.error('Erreur lors de l\'ajout du congé:', error);
       alert('Erreur: Vérifiez que l\'employé a assez de jours de congé disponibles');
     }
+  };
+
+  const handleEditLeaveBalance = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.put(`${API}/employees/${editingEmployee.id}/leave-balance`, {
+        total_days: parseInt(editLeaveData.total_days),
+        total_hours: parseInt(editLeaveData.total_hours),
+        used_days: parseInt(editLeaveData.used_days),
+        used_hours: parseInt(editLeaveData.used_hours)
+      });
+      setShowEditLeave(false);
+      setEditingEmployee(null);
+      await loadData();
+    } catch (error) {
+      console.error('Erreur lors de la modification:', error);
+      alert('Erreur lors de la modification du solde de congés');
+    }
+  };
+
+  const openEditModal = (employee) => {
+    setEditingEmployee(employee);
+    setEditLeaveData({
+      total_days: employee.total_leave_days,
+      total_hours: employee.total_leave_hours || 0,
+      used_days: employee.used_leave_days,
+      used_hours: employee.used_leave_hours || 0
+    });
+    setShowEditLeave(true);
   };
 
   const handleCancelLeave = async (leaveId) => {
