@@ -476,7 +476,7 @@ const EmployeeManagement = () => {
                   <option value="">Sélectionner un employé</option>
                   {employees.map((emp) => (
                     <option key={emp.id} value={emp.id}>
-                      {emp.name} ({emp.remaining_leave_days} jours restants)
+                      {emp.name} ({emp.remaining_leave_hours || 0} heures restantes)
                     </option>
                   ))}
                 </select>
