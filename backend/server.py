@@ -314,6 +314,7 @@ async def init_sample_data():
         used_hours = (i % 5) * 8  # Random used hours for demo
         
         employee_dict = employee_data.dict()
+        employee_dict['start_date'] = start_date.isoformat()  # Convert to string
         employee_dict['total_leave_hours'] = total_hours
         employee_dict['used_leave_hours'] = used_hours
         
