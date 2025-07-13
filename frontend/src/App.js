@@ -318,11 +318,8 @@ const EmployeeManagement = () => {
                       
                       <div className="mt-3 md:mt-0 flex flex-col items-end">
                         <div className="text-right mb-2">
-                          <p className="text-sm text-gray-600">Congés restants</p>
+                          <p className="text-sm text-gray-600">Congés disponibles</p>
                           <p className="text-xl font-bold text-indigo-600">
-                            {employee.remaining_leave_days} / {employee.total_leave_days} jours
-                          </p>
-                          <p className="text-sm text-gray-500">
                             {employee.remaining_leave_hours || 0} / {employee.total_leave_hours || 0} heures
                           </p>
                         </div>
@@ -339,11 +336,11 @@ const EmployeeManagement = () => {
                         <div className="w-32 bg-gray-200 rounded-full h-2">
                           <div 
                             className="bg-indigo-600 h-2 rounded-full transition-all duration-300"
-                            style={{ width: `${getLeaveProgress(employee.used_leave_days, employee.total_leave_days)}%` }}
+                            style={{ width: `${getLeaveProgress(employee.used_leave_hours, employee.total_leave_hours)}%` }}
                           ></div>
                         </div>
                         <p className="text-xs text-gray-500 mt-1">
-                          {employee.used_leave_days} jours + {employee.used_leave_hours || 0}h utilisés
+                          {employee.used_leave_hours || 0} heures utilisées
                         </p>
                       </div>
                     </div>
