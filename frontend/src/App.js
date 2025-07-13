@@ -97,7 +97,7 @@ const EmployeeManagement = () => {
     e.preventDefault();
     try {
       await axios.post(`${API}/employees`, newEmployee);
-      setNewEmployee({ name: '', start_date: '', contract_type: 'CDI' });
+      setNewEmployee({ name: '', start_date: '', contract_type: 'CDI', total_leave_hours: '' });
       setShowAddEmployee(false);
       await loadData();
     } catch (error) {
