@@ -319,7 +319,7 @@ async def init_sample_data():
         employee_dict['used_leave_hours'] = used_hours
         
         employee = Employee(**employee_dict)
-        employees.append(employee.dict())
+        employees.append(employee.model_dump())
     
     await db.employees.insert_many(employees)
     return {"message": f"{len(employees)} employés ajoutés"}
