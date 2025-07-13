@@ -431,12 +431,24 @@ const EmployeeManagement = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-2">Type de contrat</label>
                 <select
                   value={newEmployee.contract_type}
-                  onChange={(e) => setNewEmployee({...newEmployee, contract_type: e.target.value})}
+                  onChange={(e) => {
+                    const contractType = e.target.value;
+                    let defaultHours = '';
+                    if (contractType === 'CDI') defaultHours = '200';
+                    else if (contractType === 'CDD') defaultHours = '160';
+                    else if (contractType === 'Art.60') defaultHours = '120';
+                    
+                    setNewEmployee({
+                      ...newEmployee, 
+                      contract_type: contractType,
+                      total_leave_hours: newEmployee.total_leave_hours || defaultHours
+                    });
+                  }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
-                  <option value="CDI">CDI</option>
-                  <option value="CDD">CDD</option>
-                  <option value="Art.60">Art.60</option>
+                  <option value="CDI">CDI (défaut: 200h)</option>
+                  <option value="CDD">CDD (défaut: 160h)</option>
+                  <option value="Art.60">Art.60 (défaut: 120h)</option>
                 </select>
               </div>
               
@@ -452,7 +464,7 @@ const EmployeeManagement = () => {
                   placeholder="ex: 200"
                 />
                 <p className="text-xs text-gray-500 mt-1">
-                  Saisissez le nombre total d'heures de congé pour cet employé
+                  💡 Modifiez ce nombre selon les heures spécifiques du travailleur
                 </p>
               </div>
               
