@@ -103,7 +103,7 @@ async def create_employee(employee_data: EmployeeCreate):
     
     employee = Employee(**employee_dict)
     
-    await db.employees.insert_one(employee.dict())
+    await db.employees.insert_one(employee.model_dump())
     return employee
 
 @api_router.get("/employees", response_model=List[Employee])
