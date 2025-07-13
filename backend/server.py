@@ -210,7 +210,7 @@ async def create_leave_record(leave_data: LeaveRecordCreate):
     )
     
     # Save leave record
-    await db.leaves.insert_one(leave_record.dict())
+    await db.leaves.insert_one(leave_record.model_dump())
     
     return leave_record
 
