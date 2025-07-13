@@ -148,20 +148,14 @@ async def update_employee(employee_id: str, employee_data: EmployeeUpdate):
 @api_router.put("/employees/{employee_id}/leave-balance")
 async def update_employee_leave_balance(
     employee_id: str, 
-    total_days: Optional[int] = None,
     total_hours: Optional[int] = None,
-    used_days: Optional[int] = None,
     used_hours: Optional[int] = None
 ):
-    """Mettre à jour manuellement le solde de congés d'un employé"""
+    """Mettre à jour manuellement le solde de congés d'un employé (en heures)"""
     update_dict = {}
     
-    if total_days is not None:
-        update_dict['total_leave_days'] = total_days
     if total_hours is not None:
         update_dict['total_leave_hours'] = total_hours
-    if used_days is not None:
-        update_dict['used_leave_days'] = used_days
     if used_hours is not None:
         update_dict['used_leave_hours'] = used_hours
     
