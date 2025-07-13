@@ -242,9 +242,7 @@ async def cancel_leave_record(leave_id: str):
         new_used_hours = max(0, employee['used_leave_hours'] - leave.get('hours_count', 0))
         await db.employees.update_one(
             {"id": leave['employee_id']},
-            {"$set": {
-                "used_leave_hours": new_used_hours
-            }}
+            {"$set": {"used_leave_hours": new_used_hours}}
         )
     
     # Delete leave record
