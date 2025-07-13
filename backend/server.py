@@ -47,6 +47,15 @@ class EmployeeCreate(BaseModel):
     start_date: date
     contract_type: str
 
+class EmployeeUpdate(BaseModel):
+    name: Optional[str] = None
+    start_date: Optional[date] = None
+    contract_type: Optional[str] = None
+    total_leave_days: Optional[int] = None
+    total_leave_hours: Optional[int] = None
+    used_leave_days: Optional[int] = None
+    used_leave_hours: Optional[int] = None
+
 class LeaveRecord(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     employee_id: str
