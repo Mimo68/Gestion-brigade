@@ -328,6 +328,18 @@ const EmployeeManagement = () => {
                           <p className="text-xl font-bold text-indigo-600">
                             {employee.remaining_leave_days} / {employee.total_leave_days} jours
                           </p>
+                          <p className="text-sm text-gray-500">
+                            {employee.remaining_leave_hours || 0} / {employee.total_leave_hours || 0} heures
+                          </p>
+                        </div>
+                        
+                        <div className="flex gap-2 mb-2">
+                          <button
+                            onClick={() => openEditModal(employee)}
+                            className="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1 rounded-lg text-sm transition-colors"
+                          >
+                            ✏️ Modifier
+                          </button>
                         </div>
                         
                         <div className="w-32 bg-gray-200 rounded-full h-2">
@@ -337,7 +349,7 @@ const EmployeeManagement = () => {
                           ></div>
                         </div>
                         <p className="text-xs text-gray-500 mt-1">
-                          {employee.used_leave_days} jours utilisés
+                          {employee.used_leave_days} jours + {employee.used_leave_hours || 0}h utilisés
                         </p>
                       </div>
                     </div>
