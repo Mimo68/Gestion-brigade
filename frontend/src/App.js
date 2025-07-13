@@ -13,7 +13,9 @@ const EmployeeManagement = () => {
   const [activeTab, setActiveTab] = useState('employees');
   const [showAddEmployee, setShowAddEmployee] = useState(false);
   const [showAddLeave, setShowAddLeave] = useState(false);
+  const [showEditLeave, setShowEditLeave] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [editingEmployee, setEditingEmployee] = useState(null);
 
   // Form states
   const [newEmployee, setNewEmployee] = useState({
