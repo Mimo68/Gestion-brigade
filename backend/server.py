@@ -47,9 +47,7 @@ class EmployeeUpdate(BaseModel):
     name: Optional[str] = None
     start_date: Optional[date] = None
     contract_type: Optional[str] = None
-    total_leave_days: Optional[int] = None
     total_leave_hours: Optional[int] = None
-    used_leave_days: Optional[int] = None
     used_leave_hours: Optional[int] = None
 
 class LeaveRecord(BaseModel):
