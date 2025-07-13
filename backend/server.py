@@ -42,6 +42,7 @@ class EmployeeCreate(BaseModel):
     name: str
     start_date: date
     contract_type: str
+    total_leave_hours: Optional[int] = None  # Heures optionnelles, sinon valeur par défaut
 
 class EmployeeUpdate(BaseModel):
     name: Optional[str] = None
