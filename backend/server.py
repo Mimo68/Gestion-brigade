@@ -140,8 +140,7 @@ async def update_employee(employee_id: str, employee_data: EmployeeUpdate):
     
     # If contract type is updated, recalculate leave allocation
     if 'contract_type' in update_dict:
-        total_days, total_hours = calculate_initial_leave_days(update_dict['contract_type'])
-        update_dict['total_leave_days'] = total_days
+        total_hours = calculate_initial_leave_hours(update_dict['contract_type'])
         update_dict['total_leave_hours'] = total_hours
     
     if not update_dict:
