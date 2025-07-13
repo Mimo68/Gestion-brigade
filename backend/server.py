@@ -248,15 +248,13 @@ async def cancel_leave_record(leave_id: str):
     if not leave:
         raise HTTPException(status_code=404, detail="Congé non trouvé")
     
-    # Update employee's used leave days/hours (subtract the days/hours)
+    # Update employee's used leave hours (subtract the hours)
     employee = await db.employees.find_one({"id": leave['employee_id']})
     if employee:
-        new_used_days = max(0, employee['used_leave_days'] - leave['days_count'])
         new_used_hours = max(0, employee['used_leave_hours'] - leave.get('hours_count', 0))
         await db.employees.update_one(
             {"id": leave['employee_id']},
             {"$set": {
-                "used_leave_days": new_used_days,
                 "used_leave_hours": new_used_hours
             }}
         )
