@@ -382,7 +382,8 @@ const EmployeeManagement = () => {
                           au {new Date(leave.end_date).toLocaleDateString('fr-FR')}
                         </p>
                         <p className="text-sm text-gray-600">
-                          {leave.days_count} jour(s) - {leave.leave_type}
+                          {leave.days_count} jour(s) 
+                          {leave.hours_count > 0 && ` + ${leave.hours_count}h`} - {leave.leave_type}
                         </p>
                       </div>
                       
