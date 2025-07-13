@@ -31,12 +31,16 @@ class Employee(BaseModel):
     start_date: date
     contract_type: str  # CDI, CDD, Art.60
     total_leave_days: int
+    total_leave_hours: int = 0  # Total heures de congé
     used_leave_days: int = 0
+    used_leave_hours: int = 0  # Heures utilisées
     remaining_leave_days: int
+    remaining_leave_hours: int = 0
     
     def __init__(self, **data):
         super().__init__(**data)
         self.remaining_leave_days = self.total_leave_days - self.used_leave_days
+        self.remaining_leave_hours = self.total_leave_hours - self.used_leave_hours
 
 class EmployeeCreate(BaseModel):
     name: str
