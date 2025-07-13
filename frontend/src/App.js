@@ -434,10 +434,26 @@ const EmployeeManagement = () => {
                   onChange={(e) => setNewEmployee({...newEmployee, contract_type: e.target.value})}
                   className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
-                  <option value="CDI">CDI (25 jours)</option>
-                  <option value="CDD">CDD (20 jours)</option>
-                  <option value="Art.60">Art.60 (15 jours)</option>
+                  <option value="CDI">CDI</option>
+                  <option value="CDD">CDD</option>
+                  <option value="Art.60">Art.60</option>
                 </select>
+              </div>
+              
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Heures de congé totales</label>
+                <input
+                  type="number"
+                  min="0"
+                  required
+                  value={newEmployee.total_leave_hours}
+                  onChange={(e) => setNewEmployee({...newEmployee, total_leave_hours: e.target.value})}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  placeholder="ex: 200"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Saisissez le nombre total d'heures de congé pour cet employé
+                </p>
               </div>
               
               <div className="flex gap-3">
